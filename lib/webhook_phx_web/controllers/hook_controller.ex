@@ -3,13 +3,14 @@ defmodule WebhookPhxWeb.HookController do
 
   alias WebhookPhx.Issues
   alias WebhookPhxWeb.FallbackController
+
   action_fallback FallbackController
 
   def web_hook(conn, params) do
-    issues = Issues.parse(params)
-
-    conn
-    |> put_status(:ok)
-    |> render("show.json", issues: issues)
+    with issues <- Issues.parse(params) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", issues: issues)
+    end
   end
 end

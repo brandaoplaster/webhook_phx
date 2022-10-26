@@ -1,23 +1,33 @@
 defmodule WebhookPhx.Issues do
-  def parse(params) do
+  def parse(%{"issue" => issue} = params) do
     %{
-      user: get_user(params),
+      user: get_user(issue),
       repository: get_repository(params),
-      issues: get_issues(params)
+      issues: get_issues(params),
+      contributors: get_contributors(issue)
     }
   end
 
-  defp get_issues(%{"issues" => issues}) do
+  defp get_issues(%{"issue" => issue}) do
     %{
-      title: Map.get(issues, "title"),
-      author: get_user(issues),
-      labels: get_labels(issues)
+      title: Map.get(issue, "title"),
+      author: get_user(issue),
+      labels: get_labels(issue)
     }
   end
+
+  defp get_labels(%{"labels" => []}), do: [nil]
 
   defp get_labels(%{"labels" => labels}) do
     labels
     |> Enum.map(&Map.get(&1, "name"))
+  end
+
+  defp get_contributors(%{"assignees" => []}), do: [nil]
+
+  defp get_contributors(%{"assignees" => assignees}) do
+    assignees
+    |> Enum.map(&Map.get(&1, "login"))
   end
 
   defp get_user(%{"user" => nil}), do: nil
