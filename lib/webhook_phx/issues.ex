@@ -8,6 +8,10 @@ defmodule WebhookPhx.Issues do
     }
   end
 
+  def get_user_repo(%{"repository" => repository}) do
+    Map.get(repository, "full_name")
+  end
+
   defp get_issues(%{"issue" => issue}) do
     %{
       title: Map.get(issue, "title"),
