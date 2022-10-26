@@ -1,5 +1,20 @@
 # WebhookPhx
 
+* Up docker service
+```
+docker-compose up -d
+```
+
+* run server
+```
+mix phx.server
+```
+
+* Run ngrok
+```
+ngrok http 4000
+```
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
