@@ -7,6 +7,8 @@ defmodule WebhookPhxWeb.Router do
 
   scope "/api", WebhookPhxWeb do
     pipe_through :api
+
+    post "/webhook", HookController, :web_hook
   end
 
   # Enables LiveDashboard only for development
