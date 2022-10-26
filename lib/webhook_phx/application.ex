@@ -5,6 +5,8 @@ defmodule WebhookPhx.Application do
 
   use Application
 
+  alias WebhookPhx.IssuesStorage
+
   @impl true
   def start(_type, _args) do
     children = [
@@ -15,7 +17,8 @@ defmodule WebhookPhx.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: WebhookPhx.PubSub},
       # Start the Endpoint (http/https)
-      WebhookPhxWeb.Endpoint
+      WebhookPhxWeb.Endpoint,
+      IssuesStorage
       # Start a worker by calling: WebhookPhx.Worker.start_link(arg)
       # {WebhookPhx.Worker, arg}
     ]
